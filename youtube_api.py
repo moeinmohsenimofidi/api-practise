@@ -5,7 +5,7 @@ from googleapiclient.discovery import build
 import googleapiclient.errors
 import json
 
-CHANNEL_ID =["UCfM3zsQsOnfWNUppiycmBuw",]
+CHANNEL_ID =["UCfM3zsQsOnfWNUppiycmBuw"]
 API_KEY = "AIzaSyCVn30zAVbkG5GiJ7bV2nyeVU-agTnByaw"
 playlist_id ="UUfM3zsQsOnfWNUppiycmBuw"
 api_service_name = "youtube"
@@ -43,7 +43,8 @@ def get_video_ids(youtube,playlist_id):
     request = youtube.playlistItems().list(
         part="snippet,contentDetails",
         playlistId=playlist_id,
-        maxResults = 50
+        maxResults=50,
+
     )
     response = request.execute()
     for item in response["items"]:
