@@ -24,7 +24,7 @@ def get_channel_state(yotube, username):
         forUsername=username
     )
     response = request.execute()
-    return print(response)
+    return response
 
 
 hours_pattern = re.compile(r'(\d+)H')
@@ -79,5 +79,5 @@ while True:
 minutes, seconds = divmod(total_seconds, 60)
 hours, minutes = divmod(minutes, 60)
 
+get_channel_state(youtube, "schafer5")
 print(f"{hours}:{minutes}:{seconds}" )
-#get_channel_state(youtube, "schafer5")
