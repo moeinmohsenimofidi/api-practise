@@ -27,7 +27,7 @@ def get_channel_state(youtube, channel_ids):
     response = request.execute()
 
     for item in response["items"]:
-        data = {"cahnnelName":item["snippet"]["title"],
+        data = {"cahnnelName": item["snippet"]["title"],
                 "subscribers": item["statistics"]["subscriberCount"],
                 "views": item["statistics"]["viewCount"],
                 "totalViews": item["statistics"]["videoCount"],
