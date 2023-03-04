@@ -1,9 +1,9 @@
 import pandas as pd
 import requests
-from datetime import datetime, time, timedelta
+from datetime import datetime, time,
 import time
 import json
-from pprint import pprint
+
 
 """'
 city_list = ["Graun im vinschgau","Maso corto","Mals","stilfs","Laas","Schlanders",
