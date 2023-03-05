@@ -44,10 +44,16 @@ for city in city_list:
 print(location)
 """
 # start and end epoch time for yesterday
-start_df = (int(time.time() // 86400)) * 86400 - 86400
-end_df = (int(time.time() // 86400)) * 86400
-print(start_df)
-print(end_df)
+
+start_epoch = (int(time.time() // 86400)) * 86400 - 86400
+end_epoch = (int(time.time() // 86400)) * 86400
+print(start_epoch)
+local_time = time.gmtime(start_epoch )
+print("Local time:", local_time)
+print(end_epoch)
+local_time = time.gmtime(end_epoch)
+print("Local time:", local_time)
+
 
 
 #use history weather API
