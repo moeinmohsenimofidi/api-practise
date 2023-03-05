@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-from datetime import datetime, time,
+from datetime import datetime, time, timedelta
 import time
 import json
 
@@ -44,7 +44,7 @@ for city in city_list:
 print(location)
 """
 # start and end epoch time for yesterday
-start_df = midnight = (int(time.time() // 86400)) * 86400 - 86400
+start_df = (int(time.time() // 86400)) * 86400 - 86400
 end_df = (int(time.time() // 86400)) * 86400
 print(start_df)
 print(end_df)
