@@ -1,11 +1,21 @@
-import pandas as pd
 import requests
-from datetime import datetime, time, timedelta
+from datetime import datetime, time
 import time
 import json
 
 
-"""'
+
+# start and end epoch time for yesterday
+
+epoch_time = (int(time.time() // 86400)) * 86400 - 86400
+end_epoch = (int(time.time() // 86400)) * 86400
+print(epoch_time)
+print(end_epoch)
+
+current_time = int(time.time())
+'''
+# List of points extracted from the map
+
 city_list = ["Graun im vinschgau","Maso corto","Mals","stilfs","Laas","Schlanders",
              "Ultimo-Ulten","Terlan","Bolzano","Laives","Caldaro sulla Strada del vino",
              "Welschnofen","Renon-Ritten","Kastelruth","Urtijei","Selva","Corvara",
@@ -13,80 +23,47 @@ city_list = ["Graun im vinschgau","Maso corto","Mals","stilfs","Laas","Schlander
              "Prettau","San Giacomo","Vandoies-Vintl","Brixen","Sterzing","Ratschings",
              "St.Leonhard in Passeier","Pennes","Valdurna","Sarnthein","Merano","Algund",
              "Partschins","Naturns"]
-"""
-city_list = ["Bolzano", "Merano"]
+'''
 
-API_KEY = "3781a117fbc24b712b262512ef3e1139"
+# test cities
+test_cities = ["Bolzano", "Merano"]
+
+
+API_KEY = "702aaee7581400652b3e4dca17874e95"
 GEOCODE_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
-#CALL_ENDPOINT = "https://api.openweathermap.org/data/3.0/onecall"
-history_endpoint = "https://history.openweathermap.org/data/3.0/history/timemachine"
+#history_endpoint = f"http://api.openweathermap.org/data/3.0/onecall/timemachine?lat=39.099724&lon=-94.578331&units=metric&dt={start_epoch}&appid={API_KEY}"
 
 
-#find latitude and longitude for all location in
-locations = []
-for city in city_list:
-    geocode_parameters = {
-        "q": f"{city},IT",
-        "appid": API_KEY,
-    }
-    geo_response = requests.get(GEOCODE_ENDPOINT, params=geocode_parameters).json()
+# script for find latitude and longitude for all location in the map
 
-    for item in geo_response:
-        lat_lon = {
-            "city": item["name"],
-            "lat": item["lat"],
-            "lon": item["lon"],
+
+def find_location (cities):
+    locations = []
+    for city in cities:
+        geocode_parameters = {
+            "q": f"{city},IT",
+            "appid": API_KEY
         }
+        geo_response = requests.get(GEOCODE_ENDPOINT, params=geocode_parameters).json()
+        for item in geo_response:
+            lat_lon = {
+                "city": item["name"],
+                "lat": item["lat"],
+                "lon": item["lon"]
+            }
         locations.append(lat_lon)
-    #for i in range(len(location)):
-        #location[i]['city'] = city_list[i]
+    return locations
 
-print(locations)
-
-# start and end epoch time for yesterday
-
-start_epoch = (int(time.time() // 86400)) * 86400 - 86400
-end_epoch = (int(time.time() // 86400)) * 86400
-print(start_epoch)
-local_time = time.gmtime(start_epoch )
-print("Local time:", local_time)
-print(end_epoch)
-local_time = time.gmtime(end_epoch)
-print("Local time:", local_time)
-
-print(int(time.time()))
-
-'''
-#use history weather API
-#data = []
-#for location in locations:
-
-history_parameters = {
-    "lat": 46.4981125,
-    "lon": 11.3547801,
-    "dt": start_epoch,
-    "appid": API_KEY,
-
-}
-
-
-history_response = requests.get(url="https://history.openweathermap.org/data/3.0/history/timemachine", params=history_parameters).json()
-
-print(history_response)
-
-
-"""
+cities_location = find_location(test_cities)
+base_time = (int(time.time() // 86400)) * 86400 - 86400
 weather_data = []
-for i in range(len(city_location)):
-    call_parameters = {
-        "lat": city_location[i]["lat"],
-        "lon": city_location[i]["lon"],
-        "appid": API_KEY,
-        "exclude": "current"
-    }
-
-    call_response = requests.get(CALL_ENDPOINT, params=call_parameters).json()
-    weather_data.append(call_response)
-print(weather_data)
-"""
-'''
+for city in cities_location:
+    print(city)
+    lat = city["lat"]
+    lon = city["lon"]
+    while base_time <= 1677975000:
+        print("#")
+        history_url = f"http://api.openweathermap.org/data/3.0/onecall/timemachine?lat={lat}&lon={lon}&units=metric&dt={epoch_time}&appid={API_KEY}"
+        history_response = requests.get(history_url).json()
+        weather_data.append(history_response)
+        base_time += 600
