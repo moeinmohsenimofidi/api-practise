@@ -14,16 +14,16 @@ city_list = ["Graun im vinschgau","Maso corto","Mals","stilfs","Laas","Schlander
              "St.Leonhard in Passeier","Pennes","Valdurna","Sarnthein","Merano","Algund",
              "Partschins","Naturns"]
 """
-
+city_list = ["Bolzano", "Merano"]
 
 API_KEY = "3781a117fbc24b712b262512ef3e1139"
 GEOCODE_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
 #CALL_ENDPOINT = "https://api.openweathermap.org/data/3.0/onecall"
-history_endpoint = "https://history.openweathermap.org/data/2.5/history"
+history_endpoint = "https://history.openweathermap.org/data/3.0/history/timemachine"
 
-"""'
+
 #find latitude and longitude for all location in
-location = []
+locations = []
 for city in city_list:
     geocode_parameters = {
         "q": f"{city},IT",
@@ -37,12 +37,12 @@ for city in city_list:
             "lat": item["lat"],
             "lon": item["lon"],
         }
-        location.append(lat_lon)
+        locations.append(lat_lon)
     #for i in range(len(location)):
         #location[i]['city'] = city_list[i]
 
-print(location)
-"""
+print(locations)
+
 # start and end epoch time for yesterday
 
 start_epoch = (int(time.time() // 86400)) * 86400 - 86400
@@ -54,25 +54,23 @@ print(end_epoch)
 local_time = time.gmtime(end_epoch)
 print("Local time:", local_time)
 
+print(int(time.time()))
 
-
+'''
 #use history weather API
-"""data = []
-#for loc in location:
+#data = []
+#for location in locations:
+
 history_parameters = {
-    #"q": loc["city"],
-    "q": "Bolzano,IT",
-    "type": "hour",
+    "lat": 46.4981125,
+    "lon": 11.3547801,
+    "dt": start_epoch,
     "appid": API_KEY,
-    "start": 1677801600,
-    "end": 1677888000,
+
 }
-history_response = requests.get(history_endpoint, params=history_parameters).json()
-#data.append(history_response)
-"""
-history_response = requests.get(
-    f"https://history.openweathermap.org/data/2.5/history/city?q=Bolzano,IT&type=hour&start=start_df&cnt=3&appid=3781a117fbc24b712b262512ef3e1139"
-).json()
+
+
+history_response = requests.get(url="https://history.openweathermap.org/data/3.0/history/timemachine", params=history_parameters).json()
 
 print(history_response)
 
@@ -91,3 +89,4 @@ for i in range(len(city_location)):
     weather_data.append(call_response)
 print(weather_data)
 """
+'''
