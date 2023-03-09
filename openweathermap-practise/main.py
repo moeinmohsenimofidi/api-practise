@@ -16,7 +16,7 @@ city_list = ["Graun im vinschgau","Maso corto","Mals","stilfs","Laas","Schlander
 """
 
 
-API_KEY = "3781a117fbc24b712b262512ef3e1139"
+API_KEY = ""
 GEOCODE_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
 #CALL_ENDPOINT = "https://api.openweathermap.org/data/3.0/onecall"
 history_endpoint = "https://history.openweathermap.org/data/2.5/history"
