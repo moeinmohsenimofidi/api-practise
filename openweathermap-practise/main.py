@@ -59,9 +59,10 @@ def find_location(cities):
 def get_historic_data(cities_location):
     epochTime = epoch_time()
     historic_data = []
+    temp =[]
     for city in cities_location:
         baseTime = epochTime
-        while baseTime <= 1678061400:
+        while baseTime <= 167832600:
             parameters = {
                 "lat": city["lat"],
                 "lon": city["lon"],
@@ -70,20 +71,24 @@ def get_historic_data(cities_location):
                 "units": "metric",
                 "appid": openweatherKey,
             }
-            history_response = requests.get(HISTORIC_URL, params=parameters).json()
-            historic_data.append(history_response)
-            baseTime += 600
+            response = requests.get(HISTORIC_URL, params=parameters).json()
+            for item in response:
+                '''history_response ={
+                    "city": city,
+                    "data_point": item["data"]
+                }'''
+                historic_data.append(history_response)
+                baseTime += 600
 
     return historic_data
 
 print(epoch_time())
 
 
-data = find_location(tesCities)
+data = get_historic_data(find_location(tesCities))
 print(data)
 
-with open('historic_data', 'w') as file:
-    json.dump(data, file)
+
 
 
 '''
