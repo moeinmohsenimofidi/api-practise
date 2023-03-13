@@ -29,7 +29,7 @@ city_list = ["Graun im vinschgau","Maso corto","Mals","stilfs","Laas","Schlander
 tesCities = ["Bolzano", "Merano"]
 
 
-openweatherKey = "3781a117fbc24b712b262512ef3e1139"
+openweatherKey = ""
 GEOCODE_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
 HISTORIC_URL = f"http://api.openweathermap.org/data/3.0/onecall/timemachine"
 
@@ -62,7 +62,7 @@ def get_historic_data(cities_location):
     temp =[]
     for city in cities_location:
         baseTime = epochTime
-        while baseTime <= 167832600:
+        while baseTime <= time.time():
             parameters = {
                 "lat": city["lat"],
                 "lon": city["lon"],
@@ -89,11 +89,3 @@ data = get_historic_data(find_location(tesCities))
 print(data)
 
 
-
-
-'''
-dt = epoch_time()
-iso_time = datetime.utcfromtimestamp(dt).isoformat()
-print(iso_time)
-
-'''
