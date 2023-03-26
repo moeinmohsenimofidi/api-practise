@@ -126,14 +126,14 @@ def get_altitude(lat, long):
         # Convert the latitude and longitude to the TIF file's coordinate system
         x, y = rasterio.transform.xy(transform, long, lat)
 
-        # Read the elevation value for the given location
+        # Read the altitude value for the given location
         row, col = src.index(x, y)
-        elevation = src.read(1, window=((row, row + 1), (col, col + 1)))[0][0]
+        altitude = src.read(1, window=((row, row + 1), (col, col + 1)))[0][0]
 
-        # Convert the elevation value to a Pandas DataFrame
-        df = pd.DataFrame(np.array([[elevation]]), columns=['Elevation'])
+        # Convert the altitude value to a Pandas DataFrame
+        df = pd.DataFrame(np.array([[elevation]]), columns=['altitude'])
 
-    return elevation
+    return altitude
 
 
 
