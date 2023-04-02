@@ -89,3 +89,31 @@ data = get_historic_data(find_location(tesCities))
 print(data)
 
 
+
+
+
+
+
+import json
+from datetime import datetime, timedelta
+
+# Load the JSON data
+with open('Custom_location_46_4423_11_2525_63fc88e098a8260007094a1e.json') as f:
+    data = json.load(f)
+
+# Group the data by day
+daily_data = {}
+for item in data:
+    dt = datetime.utcfromtimestamp(item['dt'])
+    date = dt.strftime('%Y-%m-%d')
+    if date not in daily_data:
+        daily_data[date] = []
+    daily_data[date].append(item)
+
+# Write each group to a separate file
+for date, items in daily_data.items():
+    filename = f'Figs/{date}.json'
+    with open(filename, 'w') as f:
+        json.dump(items, f)
+
+
